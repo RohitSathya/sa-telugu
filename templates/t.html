@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>భావాత్మక విశ్లేషణ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="file"], textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result-container {
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        .result {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .filename {
+            font-weight: bold;
+        }
+        .angry-words {
+            margin-top: 10px;
+        }
+        .angry-words ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .angry-words ul li {
+            margin-bottom: 5px;
+        }
+        .additional-message {
+            font-weight: bold;
+            color: red;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>భావాత్మక విశ్లేషణ</h1>
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+       <label for="file">ఫైలు అప్‌లోడ్ చేయండి:</label>
+       <input type="file" name="file" id="file">
+        <label for="text">లేఖనాన్ని నమోదు చేయండి:</label>
+        <textarea name="text" id="text" rows="4" cols="50" placeholder="మీ లేఖనాన్ని ఇక్కడ పేస్ చేయండి"></textarea>
+        <label for="url">URL నమోదు చేయండి:</label>
+        <input type="text" name="url" id="url" placeholder="URL నమోదు చేయండి">
+        <button type="submit">విశ్లేషించు</button>
+    </form>
+
+    {% if result %}
+    <div class="result-container">
+        <h2>విశ్లేషణ ఫలితాలు</h2>
+        <div class="result">
+            <div><strong>భావాత్మకం:</strong> {{ result.sentiment }}</div>
+            <div><strong>కోపాల పదం సంఖ్య:</strong> {{ result.angry_word_count }}</div>
+            {% if result.angry_words %}
+            <div class="angry-words">
+                <strong>కోపాల పదాలు:</strong>
+                <ul>
+                    {% for word in result.angry_words %}
+                    <li>{{ word }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div><strong>మూల లేఖనం:</strong> {{ result.original_text }}</div>
+        </div>
+    </div>
+    {% endif %}
+<script>
+</script>
+</body>
+</html>
