@@ -95,13 +95,13 @@ def analyze():
         angry_words_list = []
 
         # Determine sentiment label based on compound score
-        if scores['compound'] >= 0.2:
+        if scores['compound'] >= 0.05:
             sentiment = 'Positive'
             for word in translated_text.lower().split():
                 if word in aw:
                     angry_word_count += 1
                     angry_words_list.append(word)
-        elif scores['compound'] <= -0.05:
+        elif scores['compound'] <= -0.02:
             sentiment = 'Negative'
             for word in translated_text.lower().split():
                 if word in aw:
@@ -131,6 +131,11 @@ def analyze():
             'original_text': text,
             'translated_text': translated_text,
             'angry_words': angry_words_list,
+            'Positive': scores['pos'],
+            'Negative': scores['neg'],
+            'Neutral': scores['neu'],
+            'Compound': scores['compound'],
+
         }
 
         return render_template('t.html', result=result)
