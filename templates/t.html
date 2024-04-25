@@ -99,6 +99,10 @@
         <div class="result">
             <div><strong>భావాత్మకం:</strong> {{ result.sentiment }}</div>
             <div><strong>కోపాల పదం సంఖ్య:</strong> {{ result.angry_word_count }}</div>
+         <p>Positive: {{ result['Positive'] }}</p>
+        <p>Negative: {{ result['Negative'] }}</p>
+        <p>Neutral: {{ result['Neutral'] }}</p>
+         <p>Compound: {{ result['Compound'] }}</p>
             {% if result.angry_words %}
             <div class="angry-words">
                 <strong>కోపాల పదాలు:</strong>
