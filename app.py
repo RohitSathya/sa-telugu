@@ -6,6 +6,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from bs4 import BeautifulSoup
 import re
 import requests
+from transformers import pipeline
 
 app = Flask(__name__)
 
@@ -88,20 +89,19 @@ def analyze():
             translated_text = GoogleTranslator(source='te', target='en').translate(text)
         else:
             translated_text = text
-
         # Analyze sentiment for translated text
         scores = sia.polarity_scores(translated_text)
         angry_word_count = 0
         angry_words_list = []
 
         # Determine sentiment label based on compound score
-        if scores['compound'] >= 0.05:
+        if scores['compound'] > 0.05:
             sentiment = 'Positive'
             for word in translated_text.lower().split():
                 if word in aw:
                     angry_word_count += 1
                     angry_words_list.append(word)
-        elif scores['compound'] <= -0.02:
+        elif scores['compound'] < -0.05:
             sentiment = 'Negative'
             for word in translated_text.lower().split():
                 if word in aw:
