@@ -6,7 +6,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from bs4 import BeautifulSoup
 import re
 import requests
-from transformers import pipeline
+
 
 app = Flask(__name__)
 
