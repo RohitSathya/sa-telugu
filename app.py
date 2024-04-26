@@ -82,7 +82,7 @@ def analyze():
                     return 'Error: Unable to extract text from the provided URL.'
                 # Truncate the text if it exceeds 5000 characters
                 if len(text) > 5000:
-                    text = text[:4000]
+                    text = text[:4998]
 
         # Translate text to English if it's not in English
         if not text.isascii():
