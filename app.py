@@ -31,7 +31,8 @@ def extract_video_id(url):
         return None
 
 def extract_text_from_url(url):
-    try:
+
+
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for any HTTP error
         html_content = response.content
@@ -43,12 +44,7 @@ def extract_text_from_url(url):
         text = re.sub(r'\s+', ' ', text)
         text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
         return text.strip()
-    except requests.RequestException as e:
-        print(f"Request Error: {e}")
-        return None
-    except Exception as e:
-        print(f"Error extracting text from URL: {e}")
-        return None
+
 
 @app.route('/')
 def index():
@@ -78,7 +74,9 @@ def analyze():
                     return 'Invalid YouTube URL. Please provide a valid URL.'
             else:
                 text = extract_text_from_url(url)
+                print(text)
                 if not text:
+                    print("aaaaaaaaa")
                     return 'Error: Unable to extract text from the provided URL.'
                 # Truncate the text if it exceeds 5000 characters
                 if len(text) > 5000:
@@ -86,8 +84,18 @@ def analyze():
 
         # Translate text to English if it's not in English
         if not text.isascii():
-            translated_text = GoogleTranslator(source='te', target='en').translate(text)
+            print('bbbbbbbbbbbbbbsdsd')
+            print(len(text))
+            text = text[:2340]
+
+
+
+
+
+
+            translated_text = GoogleTranslator(source='auto', target='en').translate(text)
         else:
+            print("ccccccccccc")
             translated_text = text
         # Analyze sentiment for translated text
         scores = sia.polarity_scores(translated_text)
